@@ -8,3 +8,6 @@ bin
 
 .devcontainer
 .vscode
+.idea
+
+src/main/resources/

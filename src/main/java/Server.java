@@ -1,65 +1,12 @@
 import com.google.gson.Gson;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import io.github.cdimascio.dotenv.Dotenv;
-import org.sql2o.Sql2o;
-import org.sql2o.Sql2oException;
-import org.sql2o.quirks.PostgresQuirks;
+import model.MessRequest;
+import spark.Spark;
 import spark.utils.IOUtils;
 import static spark.Spark.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-import java.util.stream.Collectors;
-
-
 public class Server {
 
-    private static Sql2o sql2o;
-
-    private static Sql2o getSql2o() {
-        if (sql2o == null) {
-            try {
-                Properties props = getDbUrl(System.getenv("DATABASE_URL"));
-                sql2o = new Sql2o(new HikariDataSource(new HikariConfig(props)), new PostgresQuirks());
-            } catch (URISyntaxException | Sql2oException e) {
-                e.printStackTrace();
-            }
-
-            try (org.sql2o.Connection con = sql2o.beginTransaction()) {
-                //con.createQuery(LightsSchema).executeUpdate();
-                // TODO: PUT SCHEMAS HERE
-                con.commit();
-            } catch (Sql2oException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return sql2o;
-    }
-
-    private static Properties getDbUrl(String databaseUrl) throws URISyntaxException {
-        Properties props = new Properties();
-        if (databaseUrl == null) {
-            Dotenv dotenv = Dotenv.load();
-            props.setProperty("username", dotenv.get("DEV_DB_USER"));
-            props.setProperty("password", dotenv.get("DEV_DB_PWORD"));
-            props.setProperty("jdbcUrl", dotenv.get("DEV_DB_URL"));
-        } else {
-            URI dbUri = new URI(databaseUrl);
-
-            props.setProperty("username", dbUri.getUserInfo().split(":")[0]);
-            props.setProperty("password", dbUri.getUserInfo().split(":")[1]);
-            props.setProperty("jdbcUrl", "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort()
-                    + dbUri.getPath() + "?sslmode=require");
-        }
-
-        return props;
-    }
-
     final static int PORT_NUM = 7000;
-
     private static int getHerokuAssignedPort() {
         String herokuPort = System.getenv("PORT");
         if (herokuPort != null) {
@@ -67,12 +14,78 @@ public class Server {
         }
         return PORT_NUM;
     }
+
+    public static String geoLocFormatString = "https://www.google.com/maps/search/?api=1&query=%s,%s";
+
+    public static String messRequestDescriptiveFormatString = "[CONTACTNAME], this is [USERNAME]. I am borrowing another number. I am in [1] and for reasons of personal safety cannot call or text at the moment. Do not call or text me, and do not respond to this text. [2]." + "\n" +
+            "\n" +
+            "My current location is at [GEOLOC]" + "\n" +
+            "\n" +
+            "This message was sent through Instalert.";
+
+    public static String makeValidFStringFromDescriptiveFString(String descriptiveFString) {
+        //replace all square bracket pairs with "%s".
+        return "";
+    };
+
+    public static String messRequestFormatString = "%s, this is %s. I am borrowing another number. I am in %s and for reasons of personal safety cannot call or text at the moment. Do not call or text me, and do not respond to this text. %s." + "\n" +
+            "\n" +
+            "My current location is at %s" + "\n" +
+            "\n" +
+            "This message was sent through Instalert.";
+
+    public static String[][] messRequestFormatStringOptions = {
+            {
+                "an uncomfortable situation",
+                "a bad situation",
+                "an emergency",
+            },
+            {
+                "Please come pick me up",
+                "Please send help soon",
+                "Please send help immediately",
+            },
+    };
+
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
-        getSql2o();
 
         staticFiles.location("/");
 
-        get("/", (req, res) -> "oog");
+        get("", (req, res) -> {
+            res.status(200);
+            res.type("text/html");
+
+            return IOUtils.toString(Spark.class.getResourceAsStream("/index.html"));
+        });
+
+        get("/", (req, res) -> {
+            res.status(200);
+            res.type("text/html");
+
+            return IOUtils.toString(Spark.class.getResourceAsStream("/index.html"));
+        });
+
+        notFound((req, res) -> {
+            res.status(200);
+            res.type("text/html");
+
+            return IOUtils.toString(Spark.class.getResourceAsStream("/index.html"));
+        });
+
+        post("/api/send-message", (req, res) -> {
+            res.status(200);
+
+            String blob = req.body();
+            MessRequest r = new Gson().fromJson(blob, MessRequest.class);
+
+            //Form string
+            String geoLocString        = String.format(geoLocFormatString, r.user.geoLocation.lat, r.user.geoLocation.lng);
+            String awaitSeverityString = String.format(messRequestFormatString, r.contact.firstName, r.user.firstName, "%s", "%s", "https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" + r.user.geoLocation);
+
+            //Send r to twilio endpoint
+
+            return "";
+        });
     }
 }
