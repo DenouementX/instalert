@@ -121,11 +121,23 @@ public class Server {
             Message message = Message.creator(
                     new PhoneNumber(r.contact.phoneNumber),
                     new PhoneNumber("+14092237957"),
-                    formedTextString).create();
+                    formedTextString)
+                .create();
 
             System.out.println(message.getSid());
 
             return "";
         });
+
+        post("/api/sms", (req, res) -> {
+            String phoneNumber = req.queryParams("From");
+            String msgBody = req.queryParams("Body");
+
+            System.out.println(phoneNumber);
+            System.out.println(msgBody);
+
+            return "";
+        });
+
     }
 }
