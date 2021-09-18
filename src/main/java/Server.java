@@ -99,11 +99,10 @@ public class Server {
             String formedTextString    = String.format(awaitSeverityString, messRequestFormatStringOptions[0][r.severity], messRequestFormatStringOptions[1][r.severity]);
 
             //Send formedTextString to twilio endpoint
-
-
-            Message message = Message.creator(new PhoneNumber(r.contact.phoneNumber),
-            new PhoneNumber("+14092237957"), 
-            "put the final string here").create();
+            Message message = Message.creator(
+                    new PhoneNumber(r.contact.phoneNumber),
+                    new PhoneNumber("+14092237957"),
+                    formedTextString).create();
     
             System.out.println(message.getSid());
 
