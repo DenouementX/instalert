@@ -1,17 +1,20 @@
-import com.google.gson.Gson;
-import model.MessRequest;
 import spark.Spark;
 import spark.utils.IOUtils;
-
-import java.util.List;
-
 import static spark.Spark.*;
+
+import com.google.gson.Gson;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import model.MessRequest;
 
 public class Server {
 
@@ -34,7 +37,7 @@ public class Server {
 
     public static String makeValidFStringFromDescriptiveFString(String descriptiveFString) {
         return descriptiveFString.replaceAll("\\[(.*?)\\]", "%s");
-    };
+    }
 
 //    public static String messRequestFormatString = "%s, this is %s. I am borrowing another number. I am in %s and for reasons of personal safety cannot call or text at the moment. Do not call or text me, and do not respond to this text. %s." + "\n" +
 //            "\n" +
@@ -95,15 +98,15 @@ public class Server {
             //Form string
             String geoLocString        = String.format(geoLocFormatString, r.user.geoLocation.lat, r.user.geoLocation.lng);
             String awaitSeverityString = String.format(messRequestFormatString, r.contact.firstName, r.user.firstName, "%s", "%s", geoLocString);
-            //List<String> severityFStr  = java stream shit with messRequestFormatStringOptions;
-            String formedTextString    = String.format(awaitSeverityString, messRequestFormatStringOptions[0][r.severity], messRequestFormatStringOptions[1][r.severity]);
+            String formedTextString    = String.format(awaitSeverityString, Arrays.stream(messRequestFormatStringOptions)
+                    .map(options -> options[r.severity]).toArray(String[]::new));
 
             //Send formedTextString to twilio endpoint
             Message message = Message.creator(
                     new PhoneNumber(r.contact.phoneNumber),
                     new PhoneNumber("+14092237957"),
                     formedTextString).create();
-    
+
             System.out.println(message.getSid());
 
             return "";
