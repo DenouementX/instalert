@@ -2,6 +2,9 @@ import com.google.gson.Gson;
 import model.MessRequest;
 import spark.Spark;
 import spark.utils.IOUtils;
+
+import java.util.List;
+
 import static spark.Spark.*;
 
 public class Server {
@@ -15,7 +18,7 @@ public class Server {
         return PORT_NUM;
     }
 
-    public static String geoLocFormatString = "https://www.google.com/maps/search/?api=1&query=%s,%s";
+    public static String geoLocFormatString = "https://www.google.com/maps/search/?api=1&query=%f,%f";
 
     public static String messRequestDescriptiveFormatString = "[CONTACTNAME], this is [USERNAME]. I am borrowing another number. I am in [1] and for reasons of personal safety cannot call or text at the moment. Do not call or text me, and do not respond to this text. [2]." + "\n" +
             "\n" +
@@ -24,15 +27,16 @@ public class Server {
             "This message was sent through Instalert.";
 
     public static String makeValidFStringFromDescriptiveFString(String descriptiveFString) {
-        //replace all square bracket pairs with "%s".
-        return "";
+        return descriptiveFString.replaceAll("\\[(.*?)\\]", "%s");
     };
 
-    public static String messRequestFormatString = "%s, this is %s. I am borrowing another number. I am in %s and for reasons of personal safety cannot call or text at the moment. Do not call or text me, and do not respond to this text. %s." + "\n" +
-            "\n" +
-            "My current location is at %s" + "\n" +
-            "\n" +
-            "This message was sent through Instalert.";
+//    public static String messRequestFormatString = "%s, this is %s. I am borrowing another number. I am in %s and for reasons of personal safety cannot call or text at the moment. Do not call or text me, and do not respond to this text. %s." + "\n" +
+//            "\n" +
+//            "My current location is at %s" + "\n" +
+//            "\n" +
+//            "This message was sent through Instalert.";
+
+    public static String messRequestFormatString = makeValidFStringFromDescriptiveFString(messRequestDescriptiveFormatString);
 
     public static String[][] messRequestFormatStringOptions = {
             {
@@ -81,9 +85,12 @@ public class Server {
 
             //Form string
             String geoLocString        = String.format(geoLocFormatString, r.user.geoLocation.lat, r.user.geoLocation.lng);
-            String awaitSeverityString = String.format(messRequestFormatString, r.contact.firstName, r.user.firstName, "%s", "%s", "https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" + r.user.geoLocation);
+            String awaitSeverityString = String.format(messRequestFormatString, r.contact.firstName, r.user.firstName, "%s", "%s", geoLocString);
+            //List<String> severityFStr  = java stream shit with messRequestFormatStringOptions;
+            String formedTextString    = String.format(awaitSeverityString, messRequestFormatStringOptions[0][r.severity], messRequestFormatStringOptions[1][r.severity]);
 
-            //Send r to twilio endpoint
+            //Send formedTextString to twilio endpoint
+
 
             return "";
         });
