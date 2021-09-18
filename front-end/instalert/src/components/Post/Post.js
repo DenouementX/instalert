@@ -31,6 +31,8 @@ class Post extends Component {
                     <img src={image} />
                 </div>
             </div>
+            <div className="Post-interactions">
+            </div>
             <div className="Post-caption">
                 <strong>{nickname}</strong> {caption}
             </div>
