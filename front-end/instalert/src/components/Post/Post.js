@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Post.css";
+import meat from "../../images/meatball_menu.png";
 
 class Post extends Component {
     constructor(props){
@@ -19,6 +20,9 @@ class Post extends Component {
                     </div>
                     <div className="Post-user-nickname">
                         <span>{nickname}</span>
+                    </div>
+                    <div className="Post-user-meatball">
+                        <img className="Meatball-menu" src={meat}/>
                     </div>
                 </div>
             </header>
