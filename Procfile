@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar app-1.0-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -jar instalert-1.0-SNAPSHOT.jar
