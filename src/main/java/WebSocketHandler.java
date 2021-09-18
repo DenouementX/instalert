@@ -12,7 +12,7 @@ public class WebSocketHandler {
     }
 
     @OnWebSocketClose
-    public void onClose(Session user) {
+    public void onClose(Session user, String reason) {
         Server.sessionList.remove(user);
     }
 
