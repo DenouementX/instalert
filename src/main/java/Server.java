@@ -8,6 +8,7 @@ import java.util.List;
 import static spark.Spark.*;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvException;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
@@ -57,9 +58,24 @@ public class Server {
             },
     };
 
+    public static void initTwilio() {
+        String sid = "";
+        String token = "";
+
+        try {
+            Dotenv dotenv = Dotenv.load();
+            sid = dotenv.get("SID");
+            token = dotenv.get("TOKEN");
+        } catch (DotenvException e) {
+            sid = System.getenv("SID");
+            token = System.getenv("TOKEN");
+        }
+
+        Twilio.init(sid, token);
+    }
+
     public static void main(String[] args) {
-        Dotenv dotenv = Dotenv.load();
-        Twilio.init(dotenv.get("SID"), dotenv.get("TOKEN"));
+        initTwilio();
 
         port(getHerokuAssignedPort());
 
