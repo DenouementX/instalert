@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import "./SettingsCard.css";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
