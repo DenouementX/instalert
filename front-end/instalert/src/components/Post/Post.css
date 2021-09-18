@@ -1,0 +1,82 @@
+.Post {
+    border-radius: 3px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    margin-left : 0%;
+    margin-right: 0%;
+}
+.Post-user {
+    display: grid;
+    align-items: center;
+    /*justify-items: center;*/
+    grid-template-areas:
+      "profile username meatballmenu";
+    grid-template-columns: 1fr 10fr 2fr;
+    gap: 20px;
+    margin-left: 1ex;
+    padding: 1ex 0 1ex 0;
+}
+.Post-user-avatar {
+    grid-area: profile;
+    display:flex;
+    align-items:center;
+    width: 12vw;
+    height: 12vw;
+    /*margin-top: 5px;*/
+    /*margin-left: 5px;*/
+}
+.Post-user-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.Post-user-nickname {
+    grid-area: username;
+    display:flex;
+    align-items:center;
+    font-weight: 500;
+}
+.Post-user-nickname span {
+    display:flex;
+    align-items:center;
+}
+
+.Post-user-meatball {
+    grid-area: meatballmenu;
+    padding-right:1ex
+}
+.Post-user-meatball img {
+    width: 80%;
+    height: 80%;
+}
+
+.Post-image-bg {
+    background-color: #efefef;
+}
+.Post-image img {
+    display: block;
+    width: 100%;
+}
+.Post-caption {
+    padding: 5px 15px;
+}
+.Post-caption strong {
+    font-family: 'PT Sans', sans-serif;
+    font-weight: bold;
+}
+.vjs-fade-out {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.Meatball-menu {
+    margin-right:0px;
+}
+
+.container-header {
+}
+
+.Post-interactions {
+
+}
