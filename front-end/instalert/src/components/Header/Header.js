@@ -13,7 +13,7 @@ const Header = () => {
                     </h3>
                 </div>
                 <div>
-                    <img className="Nav-pfp" src={pfp} alt="Paris" />
+                    <img className="Nav-pfp" src={pfp} alt="profile pic" />
                 </div>
             </div>
         </nav>
