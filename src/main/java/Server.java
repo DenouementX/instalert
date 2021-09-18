@@ -4,6 +4,12 @@ import spark.Spark;
 import spark.utils.IOUtils;
 import static spark.Spark.*;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
 public class Server {
 
     final static int PORT_NUM = 7000;
@@ -48,6 +54,9 @@ public class Server {
     };
 
     public static void main(String[] args) {
+        Dotenv dotenv = Dotenv.load();
+        Twilio.init(dotenv.get("SID"), dotenv.get("TOKEN"));
+
         port(getHerokuAssignedPort());
 
         staticFiles.location("/");
@@ -84,6 +93,12 @@ public class Server {
             String awaitSeverityString = String.format(messRequestFormatString, r.contact.firstName, r.user.firstName, "%s", "%s", "https://www.google.com/maps/search/?api=1&query=36.26577,-92.54324" + r.user.geoLocation);
 
             //Send r to twilio endpoint
+
+            Message message = Message.creator(new PhoneNumber(r.contact.phoneNumber),
+            new PhoneNumber("+14092237957"), 
+            "put the final string here").create();
+    
+            System.out.println(message.getSid());
 
             return "";
         });

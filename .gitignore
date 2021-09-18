@@ -11,3 +11,5 @@ bin
 .idea
 
 src/main/resources/
+
+.env
