@@ -1,0 +1,35 @@
+.flex-container-1 {
+    display: flex;
+    flex-flow: row no-wrap;
+    justify-content: space-around;
+    align-content: stretch;
+    padding: 2%;
+}
+
+.flex-container-2 {
+    display: flex;
+    flex-flow: row no-wrap;
+    justify-content: space-evenly;
+    align-content: stretch;
+    padding: 2%;
+}
+
+.SettingsCard {
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    background-color: #eee;
+    margin-left : 5%;
+    margin-right: 5%;
+}
+
+.FieldText {
+    width: 30%;
+}
+
+.FieldSelect {
+    width: 30%;
+}
+
+.empty-width {
+    width: 10%;
+}
