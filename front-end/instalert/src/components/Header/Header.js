@@ -1,5 +1,6 @@
 import React from "react";
 import "./Header.css";
+import pfp from "../../images/pfp.png";
 
 class Header extends React.Component{
     render(){
@@ -11,9 +12,9 @@ class Header extends React.Component{
                             Instalert
                         </h3>
                     </div>
-                </div>
-                <div className="Nav-pfp">
-
+                    <div>
+                        <img className="Nav-pfp" src={pfp} alt="Paris" />
+                    </div>
                 </div>
             </nav>
         );
