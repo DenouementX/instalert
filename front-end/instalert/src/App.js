@@ -56,8 +56,8 @@ const App = () => {
             const crd = pos.coords;
             setLat(crd.latitude)
             setLng(crd.longitude)
+            getContacts()
         }, error, options)
-        getContacts()
     }, []);
     
     const doPost = (contact) => (severity) => {
