@@ -73,9 +73,9 @@
     opacity: 0;
 }
 
-.Meatball-menu {
-    margin-right:0;
-}
+/*.Meatball-menu {*/
+/*    margin-right:0;*/
+/*}*/
 
 .container-header {
 }
@@ -112,4 +112,28 @@
 
 .Post-interactions-right {
     grid-area: right;
+}
+
+.likedHeart {
+    object-position: -399px -660px !important;
+}
+
+.heart {
+    object-position: -650px -660px;
+}
+
+.bookmarked {
+    object-position: -706px -545px !important;
+}
+
+.bookmark {
+    object-position: -300px -711px;
+}
+
+.commented {
+    object-position: -448px -658px !important;
+}
+
+.comment {
+    object-position: -515px -352px;
 }
