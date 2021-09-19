@@ -6,18 +6,19 @@
 .Nav-menus {
     display: flex;
     flex-direction: row;
-    height: 30px;
-    margin: 0 auto;
+    justify-content: space-between;
+    height: 35px;
     padding: 20px 20px;
     border: 1px solid #e6e6e6;
 }
 
 .Nav-brand-logo {
-    margin: -13px 0 0 0;
+    margin: -10px 0 0 0;
     font-family: 'instagram-new';
     font-size: 40px;
 }
 
 .Nav-pfp{
-
+    position: relative;
+    height: 35px;
 }

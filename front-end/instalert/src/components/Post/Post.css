@@ -12,7 +12,7 @@
     grid-template-areas:
       "profile username meatballmenu";
     grid-template-columns: 1fr 10fr 2fr;
-    gap: 20px;
+    gap: 2ex;
     margin-left: 1ex;
     padding: 1ex 0 1ex 0;
 }
@@ -43,11 +43,14 @@
 
 .Post-user-meatball {
     grid-area: meatballmenu;
+    display:grid;
+    align-items: center;
     padding-right:1ex
 }
+
 .Post-user-meatball img {
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
 }
 
 .Post-image-bg {
@@ -58,7 +61,7 @@
     width: 100%;
 }
 .Post-caption {
-    padding: 5px 15px;
+    padding: 0 15px;
 }
 .Post-caption strong {
     font-family: 'PT Sans', sans-serif;
@@ -71,12 +74,42 @@
 }
 
 .Meatball-menu {
-    margin-right:0px;
+    margin-right:0;
 }
 
 .container-header {
 }
 
 .Post-interactions {
+    display: grid;
+    align-items: center;
+    /*justify-items: center;*/
+    grid-template-areas:
+      "left empty right";
+    grid-template-columns: 5fr 3fr 1fr;
+    gap: 2ex;
+    margin-left: 1ex;
+    padding: 1ex 0 0 0;
+}
 
+.Post-interactions-left {
+    grid-area: left;
+    display: flex;
+}
+
+.Post-interactions-button {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.Post-interactions img {
+    object-fit: none;
+    transform: scale(0.7);
+    width: 50px;
+    height: 50px;
+}
+
+.Post-interactions-right {
+    grid-area: right;
 }

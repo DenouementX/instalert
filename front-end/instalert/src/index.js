@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
+import Header from './components/Header/Header';
 import App from './App';
+import Settings from './components/Settings/Settings';
 import reportWebVitals from './reportWebVitals';
 
+const route = (
+    <Router>
+        <div>
+            <Header />
+            <Route path="/" exact component={App} />
+            <Route path="/settings" component={Settings} />
+        </div>
+    </Router>
+)
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  route,
   document.getElementById('root')
 );
 
