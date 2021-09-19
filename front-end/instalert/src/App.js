@@ -35,16 +35,13 @@ const posts = [
 ];
 
 const App = () => {
-
     return (
-        <div className="App">
-        <Header />
+    <div className="App">
         <section className="App-main">
         {posts.map(post => (
             <Post {...post}/>
         ))}
         </section>
-        <Settings/>
     </div>
     )
 };
