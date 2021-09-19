@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Posts.css';
 import Post from '../Post/Post';
 
 
-const posts = [
+const initPosts = [
     {
         nickname: "CatLover293",
         avatar:   "http://placekitten.com/200/300",
@@ -30,7 +30,10 @@ const posts = [
     },
 ];
 
-const Posts = () => {
+const Posts = ({contacts}) => {
+
+    const [posts, updatePosts] = useState(initPosts)
+
     return (
     <div className="App">
         <section className="App-main">

@@ -18,35 +18,11 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import com.google.api.core.ApiFuture;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.firebase.cloud.FirestoreClient;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
+import java.util.concurrent.ConcurrentHashMap;
 
 import model.MessRequest;
 
 public class Server {
-
-    static Firestore db = null;
-
-    private static void initFirebase() {
-        GoogleCredentials credentials = null;
-        try {
-            InputStream serviceAccount = new FileInputStream("service_account/instalert-dev-firebase-adminsdk-i6f0e-5fc15e8d69.json");
-            credentials = GoogleCredentials.fromStream(serviceAccount);
-        } catch (Exception e) {
-            System.out.println(e.getStackTrace());
-        }
-        FirebaseOptions options = new FirebaseOptions.Builder().setCredentials(credentials).build();
-        FirebaseApp.initializeApp(options);
-        db = FirestoreClient.getFirestore();
-    }
-
     final static int PORT_NUM = 7000;
 
     private static int getHerokuAssignedPort() {
@@ -112,10 +88,9 @@ public class Server {
         });
     }
 
-    
+    static ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
-        initFirebase();
         initTwilio();
 
         port(getHerokuAssignedPort());
@@ -152,6 +127,8 @@ public class Server {
             String blob = req.body();
             MessRequest r = new Gson().fromJson(blob, MessRequest.class);
 
+            map.put(r.contact.phoneNumber, r.contact.username);
+
             // Form string
             String geoLocString = String.format(geoLocFormatString, r.user.geoLocation.lat, r.user.geoLocation.lng);
             String awaitSeverityString = String.format(messRequestFormatString, r.contact.firstName, r.user.firstName,
@@ -173,29 +150,10 @@ public class Server {
             String phoneNumber = req.queryParams("From");
             String msgBody = req.queryParams("Body");
 
-            String username = "";
-
-            ApiFuture<QuerySnapshot> query = db.collection("contacts").get();
-            QuerySnapshot querySnapshot = null;
-            try {
-                querySnapshot = query.get();
-            } catch (Exception e) {
-                System.out.println(e.getStackTrace());
-            }
-            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-            for (QueryDocumentSnapshot document : documents) {
-                if (phoneNumber.equals(document.getString("phoneNumber"))) {
-                    username = document.getString("username");
-                }
-            }
-
-            System.out.println(phoneNumber);
-            System.out.println(msgBody);
+            String username = map.get(phoneNumber);
             
-            // TODO: check message body for confirmation seq
-            if (!username.equals("")) {
-                broadcastMessage(username + " liked your post");
-            }
+            // TODO: check msgBody for confirmation seq
+            broadcastMessage(username + " liked your post");
 
             return "";
         });
