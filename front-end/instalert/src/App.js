@@ -16,7 +16,7 @@ const user = {
 
 const options = {
     enableHighAccuracy: true,
-    timeout: 5000,
+    timeout: 20000,
     maximumAge: 0
   };
   
@@ -31,13 +31,15 @@ const App = () => {
     const [firebaseApp, fAppUpdate] = useState(null)
     const [db         , dbUpdate]  = useState(null)
     const [contacts, contactsUpdate] = useState(null)
+    const [lat, setLat] = useState(80)
+    const [lng, setLng] = useState(80)
 
-    const getContacts = async (lat, lng) => {
+    const getContacts = async () => {
         const firestore = getFirestore()
         const querySnapshot = await getDocs(collection(firestore, "contacts"));
 
         const contacts = querySnapshot.docs.map((doc) => doc.data())
-        contacts.forEach(contact => contact.doPost = doPost(contact, lat, lng))
+        contacts.forEach(contact => contact.doPost = doPost(contact))
         //console.log(contacts)
 
         contactsUpdate(contacts)
@@ -50,13 +52,19 @@ const App = () => {
             authDomain: 'instalert-dev.firebaseapp.com',
             projectId: 'instalert-dev'
         }));
+
         navigator.geolocation.getCurrentPosition((pos) => {
             const crd = pos.coords;
-            getContacts(crd.latitude, crd.longitude)
+            setLat(crd.latitude)
+            setLng(crd.longitude)
         }, error, options)
     }, []);
+
+    useEffect(() => {
+        getContacts()
+    }, [lat, lng])
     
-    const doPost = (contact) => (lat) => (lng) => (severity) => {
+    const doPost = (contact) => (severity) => {
         fetch('/api/send-message', {
             method: 'POST',
             mode: 'same-origin',
