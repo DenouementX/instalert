@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import "./Settings.css";
 import Header from '../Header/Header';
+import UserSettings from "../UserSettings/UserSettings"
 import SettingsCard from "../SettingsCard/SettingsCard";
+import TextField from "@mui/material/TextField";
 
-const settings = [
+const user = {fn:"Sudo", ln: "Nim"}
+
+const contacts = [
     {
         fn: "Johnathan",
         ln: "Rainwater",
@@ -32,14 +36,18 @@ const Settings = () => {
 
     return (
         <div className="Settings">
-            <div>Settings</div>
-            <div>User</div>
-            <div>Contacts</div>
+            <div className="CenterText">Settings</div>
+            <div className="LeftUnderText">User</div>
+            <section className="User">
+                <UserSettings {...user}/>
+            </section>
+            <div className="LeftUnderText">Contacts</div>
             <section className="Contacts">
-                {settings.map(set => (
-                    <SettingsCard {...set}/>
+                {contacts.map(cont => (
+                    <SettingsCard {...cont}/>
                 ))}
             </section>
+            
         </div>
     );
 }

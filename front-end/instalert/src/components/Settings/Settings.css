@@ -22,6 +22,11 @@
     margin-right: 5%;
 }
 
+.Contacts {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
 .FieldText {
     width: 30%;
 }
@@ -30,6 +35,14 @@
     width: 30%;
 }
 
-.empty-width {
-    width: 10%;
+.CenterText {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.LeftUnderText {
+    text-align: left;
+    text-decoration: underline;
+    margin: 2%;
 }
