@@ -135,6 +135,7 @@ const Posts = ({ contacts }) => {
 
     return (
         <div className="App">
+            <Toaster />
             <section className="App-main">
                 {posts.map(post => (
                     <Post {...post} />
