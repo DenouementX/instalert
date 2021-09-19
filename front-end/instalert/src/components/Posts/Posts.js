@@ -121,7 +121,7 @@ const Posts = ({ contacts }) => {
 
         ws.current.onmessage = e => {
             const message = e.data;
-            console.log("e", message);
+            console.log(message);
         };
     }, []);
 

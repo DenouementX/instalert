@@ -17,6 +17,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -99,6 +101,14 @@ public class Server {
 
         webSocket("/api/socket", WebSocketHandler.class);
         init();
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                broadcastMessage("ping");
+            }
+        }, 0, 10000);
 
         get("", (req, res) -> {
             res.status(200);
