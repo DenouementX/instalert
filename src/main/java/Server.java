@@ -13,14 +13,39 @@ import com.twilio.type.PhoneNumber;
 
 import org.eclipse.jetty.websocket.api.Session;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
+
+import com.google.api.core.ApiFuture;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 
 import model.MessRequest;
 
 public class Server {
+
+    static Firestore db = null;
+
+    private static void initFirebase() {
+        GoogleCredentials credentials = null;
+        try {
+            InputStream serviceAccount = new FileInputStream("service_account/instalert-dev-firebase-adminsdk-i6f0e-5fc15e8d69.json");
+            credentials = GoogleCredentials.fromStream(serviceAccount);
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+        }
+        FirebaseOptions options = new FirebaseOptions.Builder().setCredentials(credentials).build();
+        FirebaseApp.initializeApp(options);
+        db = FirestoreClient.getFirestore();
+    }
 
     final static int PORT_NUM = 7000;
 
@@ -87,7 +112,10 @@ public class Server {
         });
     }
 
+    
+
     public static void main(String[] args) {
+        initFirebase();
         initTwilio();
 
         port(getHerokuAssignedPort());
@@ -145,11 +173,29 @@ public class Server {
             String phoneNumber = req.queryParams("From");
             String msgBody = req.queryParams("Body");
 
-            // TODO: look up phone number on firebase to get username
+            String username = "";
+
+            ApiFuture<QuerySnapshot> query = db.collection("contacts").get();
+            QuerySnapshot querySnapshot = null;
+            try {
+                querySnapshot = query.get();
+            } catch (Exception e) {
+                System.out.println(e.getStackTrace());
+            }
+            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                if (phoneNumber.equals(document.getString("phoneNumber"))) {
+                    username = document.getString("username");
+                }
+            }
+
             System.out.println(phoneNumber);
             System.out.println(msgBody);
-
-            broadcastMessage("oog websockets");
+            
+            // TODO: check message body for confirmation seq
+            if (!username.equals("")) {
+                broadcastMessage(username + " liked your post");
+            }
 
             return "";
         });
