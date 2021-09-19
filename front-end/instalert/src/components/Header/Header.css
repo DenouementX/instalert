@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'instagram-new';
+    src: url("../../fonts/instagram-new.otf") format("opentype");
+}
+
+.Nav-menus {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 35px;
+    padding: 20px 20px;
+    border: 1px solid #e6e6e6;
+}
+
+.Nav-brand-logo {
+    margin: -10px 0 0 0;
+    font-family: 'instagram-new';
+    font-size: 40px;
+}
+
+.Nav-pfp{
+    position: relative;
+    height: 35px;
+}

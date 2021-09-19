@@ -9,3 +9,9 @@ bin
 .devcontainer
 .vscode
 .idea
+
+src/main/resources/
+
+.env
+
+service_account

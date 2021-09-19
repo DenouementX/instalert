@@ -1,0 +1,139 @@
+.Post {
+    border-radius: 3px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    margin-left : 0%;
+    margin-right: 0%;
+}
+.Post-user {
+    display: grid;
+    align-items: center;
+    /*justify-items: center;*/
+    grid-template-areas:
+      "profile username meatballmenu";
+    grid-template-columns: 1fr 10fr 2fr;
+    gap: 2ex;
+    margin-left: 1ex;
+    padding: 1ex 0 1ex 0;
+}
+.Post-user-avatar {
+    grid-area: profile;
+    display:flex;
+    align-items:center;
+    width: 12vw;
+    height: 12vw;
+    /*margin-top: 5px;*/
+    /*margin-left: 5px;*/
+}
+.Post-user-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.Post-user-nickname {
+    grid-area: username;
+    display:flex;
+    align-items:center;
+    font-weight: 500;
+}
+.Post-user-nickname span {
+    display:flex;
+    align-items:center;
+}
+
+.Post-user-meatball {
+    grid-area: meatballmenu;
+    display:grid;
+    align-items: center;
+    padding-right:1ex
+}
+
+.Post-user-meatball img {
+    width: 100%;
+    height: 100%;
+}
+
+.Post-image-bg {
+    background-color: #efefef;
+}
+.Post-image img {
+    display: block;
+    width: 100%;
+}
+.Post-caption {
+    padding: 0 15px;
+}
+.Post-caption strong {
+    font-family: 'PT Sans', sans-serif;
+    font-weight: bold;
+}
+.vjs-fade-out {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+/*.Meatball-menu {*/
+/*    margin-right:0;*/
+/*}*/
+
+.container-header {
+}
+
+.Post-interactions {
+    display: grid;
+    align-items: center;
+    /*justify-items: center;*/
+    grid-template-areas:
+      "left empty right";
+    grid-template-columns: 5fr 3fr 1fr;
+    gap: 2ex;
+    margin-left: 1ex;
+    padding: 1ex 0 0 0;
+}
+
+.Post-interactions-left {
+    grid-area: left;
+    display: flex;
+}
+
+.Post-interactions-button {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.Post-interactions img {
+    object-fit: none;
+    transform: scale(0.7);
+    width: 50px;
+    height: 50px;
+}
+
+.Post-interactions-right {
+    grid-area: right;
+}
+
+.likedHeart {
+    object-position: -399px -660px !important;
+}
+
+.heart {
+    object-position: -650px -660px;
+}
+
+.bookmarked {
+    object-position: -706px -545px !important;
+}
+
+.bookmark {
+    object-position: -300px -711px;
+}
+
+.commented {
+    object-position: -448px -658px !important;
+}
+
+.comment {
+    object-position: -515px -352px;
+}

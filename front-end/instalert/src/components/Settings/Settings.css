@@ -1,0 +1,55 @@
+.flex-container-1 {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-content: stretch;
+    padding: 2%;
+}
+
+.flex-container-2 {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-content: stretch;
+    padding: 2%;
+}
+
+.Settings {
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    background-color: #fcfcfc;
+    margin-left : 5%;
+    margin-right: 5%;
+    padding-bottom: 5ex;
+}
+
+.Contacts {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.FieldText {
+    /*width: 30%;*/
+}
+
+.FieldSelect {
+    /*width: 30%;*/
+}
+
+.CenterText {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.LeftUnderText {
+    text-align: left;
+    text-decoration: underline;
+    margin: 2%;
+}
+
+.settings-add {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+}
