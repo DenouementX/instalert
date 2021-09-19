@@ -11,7 +11,7 @@
     /*justify-items: center;*/
     grid-template-areas:
       "profile username meatballmenu";
-    grid-template-columns: 1fr 10fr 2fr;
+    grid-template-columns: 1fr 6fr 2fr;
     gap: 2ex;
     margin-left: 1ex;
     padding: 1ex 0 1ex 0;
