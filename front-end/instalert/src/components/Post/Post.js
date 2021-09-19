@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import "./Post.css";
 import meat from "../../images/meatball_menu.png";
 import sprites from "../../images/sprite.png";
@@ -8,20 +8,37 @@ function Post({username, avatar, image, caption, doPost}) {
 
     const postRef = useRef();
 
-    const likeOnClick = () => {
-        doPost(0);
-        document.querySelector('#heartInteraction').classList.add('likedHeart');
+    const [markedInteractions, mark] = useState([]);
+
+    const normalClassName = [
+        'heart',
+        'comment',
+        'bookmark'
+    ]
+
+    const markedClassName = [
+        'likedHeart',
+        'commented',
+        'bookmarked'
+    ]
+
+    const getClassName = (i) => `${normalClassName[i]} ${markedInteractions.includes(i) ? markedClassName[i] : ''}`
+
+    const markOnClick = (i) => () => {
+        doPost(i)
+        mark(marked => {
+            if(!marked.includes(i)) {
+                return marked.concat(i);
+            }
+            return marked;
+        });
     }
 
-    const commentOnClick = () => {
-        doPost(1);
-        document.querySelector('#commentInteraction').classList.add('commented')
-    }
+    const likeOnClick = markOnClick(0)
 
-    const bookmarkOnClick = () => {
-        doPost(2);
-        document.querySelector('#bookmarkInteraction').classList.add('bookmarked');
-    }
+    const commentOnClick = markOnClick(1)
+
+    const bookmarkOnClick = markOnClick(2)
 
     return (
         <article className="Post" ref={postRef}>
@@ -45,15 +62,15 @@ function Post({username, avatar, image, caption, doPost}) {
             </div>
             <div className="Post-interactions">
                 <div className="Post-interactions-left" id="changeHeart">
-                    <img className="heart" src={sprites} onClick={likeOnClick} alt="Like" id="heartInteraction" />
-                    <img className="comment" src={sprites} alt="Comment" onClick={commentOnClick} id="commentInteraction"/>
+                    <img className={getClassName(0)} src={sprites} onClick={likeOnClick} alt="Like" />
+                    <img className={getClassName(1)} src={sprites} alt="Comment" onClick={commentOnClick} id="commentInteraction"/>
                     <img src={share} alt="Share" style={{
                         transform: "scale(.85)"}}/>
                 </div>
                 <div className="Post-interactions-center" />
                 <div className="Post-interactions-right">
                     <div className="Post-interactions-button">
-                        <img className="bookmark" src={sprites} alt="Bookmark" onClick={bookmarkOnClick} id="bookmarkInteraction" />
+                        <img className={getClassName(2)} src={sprites} alt="Bookmark" onClick={bookmarkOnClick} id="bookmarkInteraction" />
                     </div>
                 </div>
             </div>
