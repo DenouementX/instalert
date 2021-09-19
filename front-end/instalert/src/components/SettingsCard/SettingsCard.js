@@ -5,6 +5,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import Fab from "@mui/material/Fab";
+import CloseIcon from "@material-ui/icons/CloseRounded";
 
 function SettingsCard ({fn, ln, un, pn, pt}) {
     const [firstName, setFirstName] = React.useState(fn);
@@ -23,9 +25,6 @@ function SettingsCard ({fn, ln, un, pn, pt}) {
 
     return (
         <article className="SettingsCard" ref={curRef}>
-            <div className="Delete">
-                
-            </div>
             <div className="CardFields">
                 <div class="flex-container-1">
                     <div class="empty-width"/>
@@ -48,7 +47,11 @@ function SettingsCard ({fn, ln, un, pn, pt}) {
                         value={lastName}
                         onChange={changeLastName}
                     />
-                    <div class="empty-width"/>
+                    <div className="Delete">
+                        <Fab size="small">
+                            <CloseIcon color="secondary"/>
+                        </Fab>
+                    </div>
                 </div>
                 <div class = "flex-container-2">
                     <TextField
@@ -62,7 +65,7 @@ function SettingsCard ({fn, ln, un, pn, pt}) {
                         onChange={changeUserName}
                     />
                     <TextField
-                        id="filled-basic"
+                        id="phonenumber"
                         className="FieldText"
                         label="Phone Number"
                         variant="filled"
@@ -71,11 +74,11 @@ function SettingsCard ({fn, ln, un, pn, pt}) {
                         value={phoneNumber}
                         onChange={changePhoneNumber}
                     />
-                    <FormControl className="FieldSelect">
+                    <FormControl className="FieldSelect" size="small">
                         <InputLabel id="post-type-label">Post Type</InputLabel>
                         <Select
-                            labelId="post-type-label"
-                            id="post-type-select"
+                            labelId="posttype-label"
+                            id="posttype"
                             label="Post Type"
                             InputProps = {{style:{fontSize:8}}}
                             value={postType}
