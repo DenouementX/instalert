@@ -2,6 +2,7 @@ import React, {useRef} from "react";
 import "./Post.css";
 import meat from "../../images/meatball_menu.png";
 import sprites from "../../images/sprite.png";
+import share from "../../images/share-35-35.png";
 
 function Post({nickname, avatar, image, caption}) {
 
@@ -29,20 +30,25 @@ function Post({nickname, avatar, image, caption}) {
             </div>
             <div className="Post-interactions">
                 <div className="Post-interactions-left">
-                    <div className="Post-interactions-button">
-                        <img src={sprites} alt="Post" style={{
-                            objectPosition: "-650px -660px"}}/>
-                    </div>
+                    <img src={sprites} alt="Like" style={{
+                        objectPosition: "-650px -660px"}}/>
+                    <img src={sprites} alt="Comment" style={{
+                        objectPosition: "-515px -352px"}}/>
+                    <img src={share} alt="Share" style={{
+                        transform: "scale(.85)"}}/>
                 </div>
                 <div className="Post-interactions-center" />
                 <div className="Post-interactions-right">
                     <div className="Post-interactions-button">
-                        <img src={sprites} alt="Post"/>
+                        <img src={sprites} alt="Comment" style={{
+                            objectPosition: "-300px -711px"}}/>
                     </div>
                 </div>
             </div>
             <div className="Post-caption">
-                <strong>{nickname}</strong> {caption}
+                <div>
+                    <strong>{nickname}</strong> {caption}
+                </div>
             </div>
         </article>
     )

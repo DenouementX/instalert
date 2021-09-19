@@ -61,7 +61,7 @@
     width: 100%;
 }
 .Post-caption {
-    padding: 5px 15px;
+    padding: 0 15px;
 }
 .Post-caption strong {
     font-family: 'PT Sans', sans-serif;
@@ -74,7 +74,7 @@
 }
 
 .Meatball-menu {
-    margin-right:0px;
+    margin-right:0;
 }
 
 .container-header {
@@ -86,7 +86,7 @@
     /*justify-items: center;*/
     grid-template-areas:
       "left empty right";
-    grid-template-columns: 3fr 5fr 1fr;
+    grid-template-columns: 5fr 3fr 1fr;
     gap: 2ex;
     margin-left: 1ex;
     padding: 1ex 0 0 0;
@@ -98,11 +98,14 @@
 }
 
 .Post-interactions-button {
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .Post-interactions img {
     object-fit: none;
-    transform: scale(0.5);
+    transform: scale(0.7);
     width: 50px;
     height: 50px;
 }
