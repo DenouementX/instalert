@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Post from './components/Post/Post';
+
+import Settings from './components/Settings/Settings';
 import SettingsCard from './components/SettingsCard/SettingsCard';
 
 
@@ -42,6 +44,7 @@ const App = () => {
             <Post {...post}/>
         ))}
         </section>
+        <Settings/>
     </div>
     )
 };
