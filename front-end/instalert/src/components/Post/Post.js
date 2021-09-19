@@ -30,7 +30,8 @@ function Post({nickname, avatar, image, caption}) {
             <div className="Post-interactions">
                 <div className="Post-interactions-left">
                     <div className="Post-interactions-button">
-                        <img src={sprites} alt="Post"/>
+                        <img src={sprites} alt="Post" style={{
+                            objectPosition: "-650px -660px;"}}/>
                     </div>
                 </div>
                 <div className="Post-interactions-center" />
