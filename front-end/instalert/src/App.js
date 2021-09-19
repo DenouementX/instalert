@@ -31,15 +31,13 @@ const App = () => {
     const [firebaseApp, fAppUpdate] = useState(null)
     const [db         , dbUpdate]  = useState(null)
     const [contacts, contactsUpdate] = useState(null)
-    const [lat, setLat] = useState(80)
-    const [lng, setLng] = useState(80)
 
-    const getContacts = async () => {
+    const getContacts = async (lat, lng) => {
         const firestore = getFirestore()
         const querySnapshot = await getDocs(collection(firestore, "contacts"));
 
         const contacts = querySnapshot.docs.map((doc) => doc.data())
-        contacts.forEach(contact => contact.doPost = doPost(contact))
+        contacts.forEach(contact => contact.doPost = doPost(contact, lat, lng))
         //console.log(contacts)
 
         contactsUpdate(contacts)
@@ -54,13 +52,11 @@ const App = () => {
         }));
         navigator.geolocation.getCurrentPosition((pos) => {
             const crd = pos.coords;
-            setLat(crd.latitude)
-            setLng(crd.longitude)
-            getContacts()
+            getContacts(crd.latitude, crd.longitude)
         }, error, options)
     }, []);
     
-    const doPost = (contact) => (severity) => {
+    const doPost = (contact) => (lat) => (lng) => (severity) => {
         fetch('/api/send-message', {
             method: 'POST',
             mode: 'same-origin',
