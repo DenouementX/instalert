@@ -72,7 +72,7 @@ const App = () => {
             body: JSON.stringify({
                 severity: severity,
                 contact: contact,
-                user: Object.assign(user, {geolocation: {lat: lat, lng: lng}})    
+                user: Object.assign(user, {geoLocation: {lat: lat, lng: lng}})    
             })
         })
     }
