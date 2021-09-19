@@ -52,12 +52,12 @@ const App = () => {
             authDomain: 'instalert-dev.firebaseapp.com',
             projectId: 'instalert-dev'
         }));
-        getContacts()
         navigator.geolocation.getCurrentPosition((pos) => {
             const crd = pos.coords;
             setLat(crd.latitude)
             setLng(crd.longitude)
         }, error, options)
+        getContacts()
     }, []);
     
     const doPost = (contact) => (severity) => {
@@ -72,7 +72,14 @@ const App = () => {
             body: JSON.stringify({
                 severity: severity,
                 contact: contact,
-                user: Object.assign(user, {geoLocation: {lat: lat, lng: lng}})    
+                user: {
+                    firstName: "John",
+                    lastName: "Smith",
+                    geoLocation: {
+                        lat: lat,
+                        lng: lng
+                    }
+                }    
             })
         })
     }
