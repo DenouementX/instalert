@@ -2,9 +2,17 @@
     border-radius: 3px;
     background-color: #fff;
     margin-bottom: 15px;
-    margin-left : 0%;
-    margin-right: 0%;
+    margin-left : 20%;
+    margin-right: 20%;
 }
+
+@media only screen and (max-width: 600px) {
+    .Post {
+        margin-left : 0;
+        margin-right: 0;
+    }
+}
+
 .Post-user {
     display: grid;
     align-items: center;
@@ -121,7 +129,7 @@
 }
 
 .heart {
-    object-position: -650px -660px;
+    object-position: -650px -659px;
 }
 
 .bookmarked {
