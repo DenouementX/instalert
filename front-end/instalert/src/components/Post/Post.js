@@ -1,6 +1,7 @@
 import React, {useRef} from "react";
 import "./Post.css";
 import meat from "../../images/meatball_menu.png";
+import sprites from "../../images/sprite.png";
 
 function Post({nickname, avatar, image, caption}) {
 
@@ -27,7 +28,17 @@ function Post({nickname, avatar, image, caption}) {
                 </div>
             </div>
             <div className="Post-interactions">
-
+                <div className="Post-interactions-left">
+                    <div className="Post-interactions-button">
+                        <img src={sprites} alt="Post"/>
+                    </div>
+                </div>
+                <div className="Post-interactions-center" />
+                <div className="Post-interactions-right">
+                    <div className="Post-interactions-button">
+                        <img src={sprites} alt="Post"/>
+                    </div>
+                </div>
             </div>
             <div className="Post-caption">
                 <strong>{nickname}</strong> {caption}

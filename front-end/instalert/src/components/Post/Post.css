@@ -12,7 +12,7 @@
     grid-template-areas:
       "profile username meatballmenu";
     grid-template-columns: 1fr 10fr 2fr;
-    gap: 20px;
+    gap: 2ex;
     margin-left: 1ex;
     padding: 1ex 0 1ex 0;
 }
@@ -43,11 +43,14 @@
 
 .Post-user-meatball {
     grid-area: meatballmenu;
+    display:grid;
+    align-items: center;
     padding-right:1ex
 }
+
 .Post-user-meatball img {
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
 }
 
 .Post-image-bg {
@@ -78,5 +81,21 @@
 }
 
 .Post-interactions {
+    display: grid;
+}
 
+.Post-interactions-left {
+    display: flex;
+}
+
+.Post-interactions-button {
+}
+
+.Post-interactions img {
+    object-fit: none;
+    object-position: -650px -660px;
+    transform: scale(0.5);
+    width: 50px;
+    height: 50px;
+    scale: 0.5;
 }
