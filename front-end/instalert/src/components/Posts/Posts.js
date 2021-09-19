@@ -54,7 +54,7 @@ const postDatas = [
         "Lines, Dots, and Curves. Alex Monterey, 2017"
     ]),
     new PostData("nature", [
-        "just came back from my road trip with frends, here are some of the photos, love y'all #goodtimes",
+        "just came back from my road trip with friends, here are some of the photos, love y'all #goodtimes",
         "Had such a solid vacay, just what I needed!",
         "God i wish i lived here. maybe when i'm not so busy haha",
         "Okay but what I want to know is what the first people to live around here and see this thought about it all. I mean look just how beautiful it is! #nationalparks #vacation"

@@ -8,6 +8,21 @@ function Post({username, avatar, image, caption, doPost}) {
 
     const postRef = useRef();
 
+    const likeOnClick = () => {
+        doPost(0);
+        document.querySelector('#heartInteraction').classList.add('likedHeart');
+    }
+
+    const commentOnClick = () => {
+        doPost(1);
+        document.querySelector('#commentInteraction').classList.add('commented')
+    }
+
+    const bookmarkOnClick = () => {
+        doPost(2);
+        document.querySelector('#bookmarkInteraction').classList.add('bookmarked');
+    }
+
     return (
         <article className="Post" ref={postRef}>
             <header>
@@ -29,19 +44,16 @@ function Post({username, avatar, image, caption, doPost}) {
                 </div>
             </div>
             <div className="Post-interactions">
-                <div className="Post-interactions-left">
-                    <img src={sprites} onClick={() => doPost(0)} alt="Like" style={{
-                        objectPosition: "-650px -660px"}}/>
-                    <img src={sprites} alt="Comment" onClick={() => doPost(1)} style={{
-                        objectPosition: "-515px -352px"}}/>
+                <div className="Post-interactions-left" id="changeHeart">
+                    <img className="heart" src={sprites} onClick={likeOnClick} alt="Like" id="heartInteraction" />
+                    <img className="comment" src={sprites} alt="Comment" onClick={commentOnClick} id="commentInteraction"/>
                     <img src={share} alt="Share" style={{
                         transform: "scale(.85)"}}/>
                 </div>
                 <div className="Post-interactions-center" />
                 <div className="Post-interactions-right">
                     <div className="Post-interactions-button">
-                        <img src={sprites} alt="Comment" onClick={() => doPost(2)} style={{
-                            objectPosition: "-300px -711px"}}/>
+                        <img className="bookmark" src={sprites} alt="Bookmark" onClick={bookmarkOnClick} id="bookmarkInteraction" />
                     </div>
                 </div>
             </div>
