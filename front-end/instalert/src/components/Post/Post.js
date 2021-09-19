@@ -8,6 +8,18 @@ function Post({username, avatar, image, caption, doPost}) {
 
     const postRef = useRef();
 
+    let clickHoldTimer = null;
+
+    const handleMouseDown = () => {
+        clickHoldTimer = setTimeout(() => {
+            doPost(2)
+        }, 3000);
+    }
+
+    const handleMouseUp = () => {
+        clearTimeout(clickHoldTimer);
+    }
+
     return (
         <article className="Post" ref={postRef}>
             <header>
@@ -25,12 +37,12 @@ function Post({username, avatar, image, caption, doPost}) {
             </header>
             <div className="Post-image">
                 <div className="Post-image-bg">
-                    <img src={image} alt="Post"/>
+                    <img src={image} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} alt="Post"/>
                 </div>
             </div>
             <div className="Post-interactions">
                 <div className="Post-interactions-left">
-                    <img src={sprites} onClick={() => doPost(1)} alt="Like" style={{
+                    <img src={sprites} onClick={() => doPost(0)} alt="Like" style={{
                         objectPosition: "-650px -660px"}}/>
                     <img src={sprites} alt="Comment" style={{
                         objectPosition: "-515px -352px"}}/>
@@ -38,7 +50,7 @@ function Post({username, avatar, image, caption, doPost}) {
                         transform: "scale(.85)"}}/>
                 </div>
                 <div className="Post-interactions-center" />
-                <div className="Post-interactions-right" onClick={() => doPost(2)} >
+                <div className="Post-interactions-right" onClick={() => doPost(1)} >
                     <div className="Post-interactions-button">
                         <img src={sprites} alt="Comment" style={{
                             objectPosition: "-300px -711px"}}/>
