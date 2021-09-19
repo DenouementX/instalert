@@ -33,22 +33,24 @@ const App = () => {
     const [lat, setLat] = useState(80)
     const [lng, setLng] = useState(80)
 
+
+
     const getContacts = async () => {
-        const firestore = getFirestore()
-        const querySnapshot = await getDocs(collection(firestore, "contacts"));
+        if(db) {
+            const querySnapshot = await getDocs(collection(db, "contacts"));
 
-        const contacts = querySnapshot.docs.map((doc) => Object.assign(doc.data(), {key: doc.id}));
-        contacts.forEach(contact => {
-            contact.doPost   = doPost(contact);
-            contact.doDelete = doDelete(contact);
-            contact.doUpdate = doUpdate(contact);
-        });
-        //console.log(contacts)
+            const contacts = querySnapshot.docs.map((doc) => Object.assign(doc.data(), {key: doc.id}));
+            contacts.forEach(contact => {
+                contact.doPost = doPost(contact);
+                contact.doDelete = doDelete(contact);
+                contact.doUpdate = doUpdate(contact);
+            });
+            //console.log(contacts)
 
-        contacts.doAdd = doAdd;
+            contacts.doAdd = doAdd;
 
-        contactsUpdate(contacts);
-        dbUpdate(firestore)
+            contactsUpdate(contacts);
+        }
     }
 
     useEffect(() => {
@@ -58,16 +60,19 @@ const App = () => {
             projectId: 'instalert-dev'
         }));
 
+        const firestore = getFirestore();
+        dbUpdate(firestore);
+
         navigator.geolocation.getCurrentPosition((pos) => {
             const crd = pos.coords;
-            setLat(crd.latitude)
-            setLng(crd.longitude)
+            setLat(crd.latitude);
+            setLng(crd.longitude);
         }, error, options)
     }, []);
 
     useEffect(() => {
         getContacts()
-    }, [lat, lng])
+    }, [lat, lng, db]);
     
     const doPost = (contact) => (severity) => {
         fetch('/api/send-message', {
