@@ -34,7 +34,7 @@ const App = () => {
 
         const contacts = querySnapshot.docs.map((doc) => doc.data())
         contacts.forEach(contact => contact.doPost = doPost(contact))
-        console.log(contacts)
+        //console.log(contacts)
 
         contactsUpdate(contacts)
         dbUpdate(firestore)
@@ -71,7 +71,7 @@ const App = () => {
         <div>
             <Header/>
             <Route path="/" exact >
-                <Posts doPost={doPost} contacts={contacts}/>
+                <Posts contacts={contacts}/>
             </Route>
             <Route path="/settings">
                 <Settings />

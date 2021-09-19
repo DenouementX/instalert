@@ -4,7 +4,7 @@ import meat from "../../images/meatball_menu.png";
 import sprites from "../../images/sprite.png";
 import share from "../../images/share-35-35.png";
 
-function Post({nickname, avatar, image, caption}) {
+function Post({username, avatar, image, caption, doPost}) {
 
     const postRef = useRef();
 
@@ -16,7 +16,7 @@ function Post({nickname, avatar, image, caption}) {
                         <img src={avatar}  alt="avatar"/>
                     </div>
                     <div className="Post-user-nickname">
-                        <span>{nickname}</span>
+                        <span>{username}</span>
                     </div>
                     <div className="Post-user-meatball">
                         <img className="Meatball-menu" src={meat} alt="menu"/>
@@ -30,7 +30,7 @@ function Post({nickname, avatar, image, caption}) {
             </div>
             <div className="Post-interactions">
                 <div className="Post-interactions-left">
-                    <img src={sprites} alt="Like" style={{
+                    <img src={sprites} onClick={() => doPost(1)} alt="Like" style={{
                         objectPosition: "-650px -660px"}}/>
                     <img src={sprites} alt="Comment" style={{
                         objectPosition: "-515px -352px"}}/>
@@ -38,7 +38,7 @@ function Post({nickname, avatar, image, caption}) {
                         transform: "scale(.85)"}}/>
                 </div>
                 <div className="Post-interactions-center" />
-                <div className="Post-interactions-right">
+                <div className="Post-interactions-right" onClick={() => doPost(2)} >
                     <div className="Post-interactions-button">
                         <img src={sprites} alt="Comment" style={{
                             objectPosition: "-300px -711px"}}/>
@@ -47,7 +47,7 @@ function Post({nickname, avatar, image, caption}) {
             </div>
             <div className="Post-caption">
                 <div>
-                    <strong>{nickname}</strong> {caption}
+                    <strong>{username}</strong> {caption}
                 </div>
             </div>
         </article>
