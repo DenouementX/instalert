@@ -122,7 +122,7 @@ const Posts = ({ contacts }) => {
         ws.current.onmessage = e => {
             const message = e.data;
             if (message != 'ping') {
-                toast('Here is your toast.');
+                toast(message + ' made a new post!');
             }
             console.log(message);
         };
