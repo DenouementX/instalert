@@ -46,6 +46,7 @@ dependencies {
     implementation "com.zaxxer:HikariCP:3.4.5"
     implementation group: 'org.sql2o.extensions', name: 'sql2o-postgres', version: '1.6.0'
     implementation group: "com.twilio.sdk", name: "twilio", version: "8.19.1"
+    implementation 'com.google.firebase:firebase-admin:8.0.1'
 }
 
 apply plugin : "java"

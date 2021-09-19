@@ -13,3 +13,5 @@ bin
 src/main/resources/
 
 .env
+
+service_account
