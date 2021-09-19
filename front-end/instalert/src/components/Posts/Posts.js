@@ -104,6 +104,27 @@ const Posts = ({ contacts }) => {
     //const [posts, updatePosts] = useState(contacts ? modifyContacts(contacts, postDatas) : initPosts)
     const [posts, updatePosts] = useState(initPosts)
 
+    const ws = useRef(null);
+
+    useEffect(() => {
+        ws.current = new WebSocket("wss://instalert-dev.herokuapp.com/api/socket");
+        ws.current.onopen = () => console.log("ws opened");
+        ws.current.onclose = () => console.log("ws closed");
+
+        return () => {
+            ws.current.close();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!ws.current) return;
+
+        ws.current.onmessage = e => {
+            const message = JSON.parse(e.data);
+            console.log("e", message);
+        };
+    }, []);
+
     useEffect(() => {
         console.log(contacts)
         updatePosts(contacts ? modifyContacts(contacts, postDatas) : initPosts)

@@ -27,7 +27,7 @@ function error(err) {
 const App = () => {
 
     //TODO: establish websockets connection with server
-
+    
     const [firebaseApp, fAppUpdate] = useState(null)
     const [db         , dbUpdate]  = useState(null)
     const [contacts, contactsUpdate] = useState(null)
