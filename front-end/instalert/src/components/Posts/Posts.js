@@ -120,7 +120,7 @@ const Posts = ({ contacts }) => {
         if (!ws.current) return;
 
         ws.current.onmessage = e => {
-            const message = JSON.parse(e.data);
+            const message = e.data;
             console.log("e", message);
         };
     }, []);
