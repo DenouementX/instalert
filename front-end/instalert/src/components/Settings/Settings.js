@@ -4,6 +4,9 @@ import Header from '../Header/Header';
 import UserSettings from "../UserSettings/UserSettings"
 import SettingsCard from "../SettingsCard/SettingsCard";
 import TextField from "@mui/material/TextField";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@material-ui/icons/AddSharp";
+import Exit from "@material-ui/icons/ExitToApp";
 
 const user = {fn:"Sudo", ln: "Nim"}
 
@@ -35,6 +38,7 @@ const Settings = () => {
     const curRef = React.useRef();
 
     return (
+        <div>
         <div className="Settings">
             <div className="CenterText">Settings</div>
             <div className="LeftUnderText">User</div>
@@ -47,7 +51,12 @@ const Settings = () => {
                     <SettingsCard {...cont}/>
                 ))}
             </section>
-            
+            <div className="AddDiv">
+                <Fab>
+                    <AddIcon color="primary"/>
+                </Fab>
+            </div>
+        </div>
         </div>
     );
 }

@@ -41,8 +41,17 @@
     font-weight: bold;
 }
 
+.AddDiv {
+    text-align: center;
+    margin: 5% auto;
+}
+
 .LeftUnderText {
     text-align: left;
     text-decoration: underline;
     margin: 2%;
+}
+
+.Exit {
+    top: 50px;
 }
