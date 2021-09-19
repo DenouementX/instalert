@@ -5,10 +5,11 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const initPosts = [
     {
-        nickname: "CatLover293",
+        nickname: "KittyAlwaysHelpin",
         avatar: "http://placekitten.com/200/300",
-        caption: "OMG LOOK AT HIM HE IS SO CUTE!!!",
-        image: "http://placekitten.com/g/200/200"
+        caption: "Hey! You're gonna be okay! Hit the big round button where the cat is pointing!",
+        captionIndex: 0,
+        image: "http://placekitten.com/g/590/590",
     },
     // {
     //     nickname: "julia_aimes",
@@ -32,7 +33,7 @@ const initPosts = [
 
 function PostData(type, captions) {
     this.type = type
-    this.captionIndex = 0
+    this.captionIndex = Math.floor(Math.random() * 4)
     this.captions = captions
     this.imageH = 430
     this.imageW = 430
@@ -42,8 +43,7 @@ function PostData(type, captions) {
 const postDatas = [
     new PostData("animals", [
         "Taking name suggestions in the comments.",
-        "look at how cute she is!",
-        "Hi, I'm Karla! Nice to meet you!",
+        "look at this absolute cutie!",
         "After three weeks of chores and constant nagging, my parents finally caved in! Welcome to your new home, Hershey!! #thoseeyes #aww",
         "whenever I'm feeling down, you are always by my side. <3 #pets #frens"
     ]),
@@ -73,27 +73,30 @@ const postDatas = [
     ]),
 ]
 
+const loopHelper = (val) => {
+    return 400 + ((val + 1) % 100)
+};
+
 const modifyContacts = (contacts, postDatas) => {
     let avatarW = 430
     let avatarH = 430
-    let captionsIndex = 0
+    let postTypeIndex = 0
 
     contacts.forEach(contact => {
         contact.avatar = `https://placeimg.com/${avatarW}/${avatarH}/people`
-        let curPostData = postDatas[captionsIndex]
+        let curPostData = postDatas[postTypeIndex]
 
         contact.caption = curPostData.captions[curPostData.captionIndex]
         contact.image = curPostData.imageUrl
 
-        curPostData.captionIndex++
-        curPostData.imageH++
-        curPostData.imageW++
+        curPostData.captionIndex = ((curPostData.captionIndex + 1) % 4)
+        curPostData.imageH = loopHelper(curPostData.imageH)
+        curPostData.imageW = loopHelper(curPostData.imageW)
+        avatarW = loopHelper(avatarW)
+        avatarH = loopHelper(avatarH)
 
-        postDatas[captionsIndex] = curPostData
-
-        avatarW++
-        avatarH++
-        captionsIndex++
+        postDatas[postTypeIndex] = curPostData
+        postTypeIndex++
     })
 
     return contacts
