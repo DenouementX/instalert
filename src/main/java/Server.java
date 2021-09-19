@@ -17,6 +17,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -36,8 +38,8 @@ public class Server {
     public static String geoLocFormatString = "https://www.google.com/maps/search/?api=1&query=%f,%f";
 
     public static String messRequestDescriptiveFormatString = "[CONTACTNAME], this is [USERNAME]. I am borrowing another number. I am in [1] and for reasons of personal safety cannot call or text at the moment. Do not call or text me via my personal number. [2]."
-            + "\n" + "\n" + "My current location is at [GEOLOC]" + "\n" + "\n"
-            + "\n" + "\n" + "To acknowledge receipt of this message, reply with \"1\"." + "\n" + "\n"
+            + "\n" + "\n" + "My current location is at [GEOLOC]"
+            + "\n" + "\n" + "To acknowledge receipt of this message, reply with \"OK\"." + "\n" + "\n"
             + "This message was sent through Instalert.";
 
     public static String makeValidFStringFromDescriptiveFString(String descriptiveFString) {
@@ -100,6 +102,14 @@ public class Server {
         webSocket("/api/socket", WebSocketHandler.class);
         init();
 
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                broadcastMessage("ping");
+            }
+        }, 0, 10000);
+
         get("", (req, res) -> {
             res.status(200);
             res.type("text/html");
@@ -152,8 +162,9 @@ public class Server {
 
             String username = map.get(phoneNumber);
             
-            // TODO: check msgBody for confirmation seq
-            broadcastMessage(username + " liked your post");
+            if (msgBody.toUpperCase().equals("OK")) {
+                broadcastMessage(username);
+            }
 
             return "";
         });

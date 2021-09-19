@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './Posts.css';
 import Post from '../Post/Post';
-
+import toast, { Toaster } from 'react-hot-toast';
 
 const initPosts = [
     {
@@ -54,7 +54,7 @@ const postDatas = [
         "Lines, Dots, and Curves. Alex Monterey, 2017"
     ]),
     new PostData("nature", [
-        "just came back from my road trip with frends, here are some of the photos, love y'all #goodtimes",
+        "just came back from my road trip with friends, here are some of the photos, love y'all #goodtimes",
         "Had such a solid vacay, just what I needed!",
         "God i wish i lived here. maybe when i'm not so busy haha",
         "Okay but what I want to know is what the first people to live around here and see this thought about it all. I mean look just how beautiful it is! #nationalparks #vacation"
@@ -104,6 +104,30 @@ const Posts = ({ contacts }) => {
     //const [posts, updatePosts] = useState(contacts ? modifyContacts(contacts, postDatas) : initPosts)
     const [posts, updatePosts] = useState(initPosts)
 
+    const ws = useRef(null);
+
+    useEffect(() => {
+        ws.current = new WebSocket("wss://instalert-dev.herokuapp.com/api/socket");
+        ws.current.onopen = () => console.log("ws opened");
+        ws.current.onclose = () => console.log("ws closed");
+
+        return () => {
+            ws.current.close();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!ws.current) return;
+
+        ws.current.onmessage = e => {
+            const message = e.data;
+            if (message != 'ping') {
+                toast(message + ' made a new post!');
+            }
+            console.log(message);
+        };
+    }, []);
+
     useEffect(() => {
         console.log(contacts)
         updatePosts(contacts ? modifyContacts(contacts, postDatas) : initPosts)
@@ -111,6 +135,7 @@ const Posts = ({ contacts }) => {
 
     return (
         <div className="App">
+            <Toaster />
             <section className="App-main">
                 {posts.map(post => (
                     <Post {...post} />

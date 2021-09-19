@@ -16,7 +16,7 @@ const user = {
 
 const options = {
     enableHighAccuracy: true,
-    timeout: 5000,
+    timeout: 20000,
     maximumAge: 0
   };
   
@@ -27,7 +27,7 @@ function error(err) {
 const App = () => {
 
     //TODO: establish websockets connection with server
-
+    
     const [firebaseApp, fAppUpdate] = useState(null)
     const [db         , dbUpdate]  = useState(null)
     const [contacts, contactsUpdate] = useState(null)
@@ -52,13 +52,17 @@ const App = () => {
             authDomain: 'instalert-dev.firebaseapp.com',
             projectId: 'instalert-dev'
         }));
-        getContacts()
+
         navigator.geolocation.getCurrentPosition((pos) => {
             const crd = pos.coords;
             setLat(crd.latitude)
             setLng(crd.longitude)
         }, error, options)
     }, []);
+
+    useEffect(() => {
+        getContacts()
+    }, [lat, lng])
     
     const doPost = (contact) => (severity) => {
         fetch('/api/send-message', {
@@ -72,7 +76,14 @@ const App = () => {
             body: JSON.stringify({
                 severity: severity,
                 contact: contact,
-                user: Object.assign(user, {geoLocation: {lat: lat, lng: lng}})    
+                user: {
+                    firstName: "John",
+                    lastName: "Smith",
+                    geoLocation: {
+                        lat: lat,
+                        lng: lng
+                    }
+                }    
             })
         })
     }
