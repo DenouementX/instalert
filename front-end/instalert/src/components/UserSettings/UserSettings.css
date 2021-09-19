@@ -1,0 +1,19 @@
+.flex-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-content: stretch;
+    width:80%;
+    margin:0 auto;
+    padding: 2%;
+}
+
+.FieldText {
+    width: 30%;
+}
+
+.Userbox {
+    background-color: #eee;
+    margin-left : 5%;
+    margin-right: 5%;
+}

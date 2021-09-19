@@ -6,10 +6,18 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 
-function SettingsCard () {
-    const [postType, setPostType] = React.useState("");
+function SettingsCard ({fn, ln, un, pn, pt}) {
+    const [firstName, setFirstName] = React.useState(fn);
+    const [lastName, setLastName] = React.useState(ln);
+    const [userName, setUserName] = React.useState(un);
+    const [phoneNumber, setPhoneNumber] = React.useState(pn);
+    const [postType, setPostType] = React.useState(pt);
 
-    const changePostType = (event) => { setPostType(event.target.value)};
+    const changeFirstName = (event) => {setFirstName(event.target.value)};
+    const changeLastName = (event) => {setLastName(event.target.value)};
+    const changeUserName = (event) => {setUserName(event.target.value)};
+    const changePhoneNumber = (event) => {setPhoneNumber(event.target.value)};
+    const changePostType = (event) => {setPostType(event.target.value)};
 
     const curRef = React.useRef();
 
@@ -27,12 +35,18 @@ function SettingsCard () {
                         label="First Name"
                         variant="filled"
                         required="true"
+                        InputProps = {{style:{fontSize:8}}}
+                        value={firstName}
+                        onChange={changeFirstName}
                     />
                     <TextField
                         id="lastname"
                         className="FieldText"
                         label="Last Name"
                         variant="filled"
+                        InputProps = {{style:{fontSize:8}}}
+                        value={lastName}
+                        onChange={changeLastName}
                     />
                     <div class="empty-width"/>
                 </div>
@@ -43,6 +57,9 @@ function SettingsCard () {
                         label="Username"
                         variant="filled"
                         required="true"
+                        InputProps = {{style:{fontSize:8}}}
+                        value={userName}
+                        onChange={changeUserName}
                     />
                     <TextField
                         id="filled-basic"
@@ -50,19 +67,25 @@ function SettingsCard () {
                         label="Phone Number"
                         variant="filled"
                         required="true"
+                        InputProps = {{style:{fontSize:8}}}
+                        value={phoneNumber}
+                        onChange={changePhoneNumber}
                     />
                     <FormControl className="FieldSelect">
                         <InputLabel id="post-type-label">Post Type</InputLabel>
                         <Select
                             labelId="post-type-label"
                             id="post-type-select"
+                            label="Post Type"
+                            InputProps = {{style:{fontSize:8}}}
                             value={postType}
-                            label="Post Type: {postType}"
                             onChange={changePostType}
                         >
-                            <MenuItem value={"Type A"}>Type A</MenuItem>
-                            <MenuItem value={"Type B"}>Type B</MenuItem>
-                            <MenuItem value={"Type C"}>Type C</MenuItem>
+                            <MenuItem value={"animals"}>Animals</MenuItem>
+                            <MenuItem value={"architecture"}>Architecture</MenuItem>
+                            <MenuItem value={"nature"}>Nature</MenuItem>
+                            <MenuItem value={"people"}>People</MenuItem>
+                            <MenuItem value={"tech"}>Tech</MenuItem>
                         </Select>
                     </FormControl>
                 </div>

@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Post from './components/Post/Post';
+
+import Settings from './components/Settings/Settings';
 import SettingsCard from './components/SettingsCard/SettingsCard';
 
 
@@ -33,10 +35,8 @@ const posts = [
 ];
 
 const App = () => {
-
     return (
-        <div className="App">
-        <Header />
+    <div className="App">
         <section className="App-main">
         {posts.map(post => (
             <Post {...post}/>
