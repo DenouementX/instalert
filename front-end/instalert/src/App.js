@@ -12,21 +12,27 @@ import { collection, getDocs } from "firebase/firestore";
 const user = {
     firstName: "John",
     lastName: "Smith",
-    geoLocation: {
-        "lat": 80,
-        "lng": 80
-    }
 };
 
+const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+  
+function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+}
 
 const App = () => {
 
-    //TODO: geolocation stuff
     //TODO: establish websockets connection with server
 
     const [firebaseApp, fAppUpdate] = useState(null)
     const [db         , dbUpdate]  = useState(null)
     const [contacts, contactsUpdate] = useState(null)
+    const [lat, setLat] = useState(80)
+    const [lng, setLng] = useState(80)
 
     const getContacts = async () => {
         const firestore = getFirestore()
@@ -47,6 +53,11 @@ const App = () => {
             projectId: 'instalert-dev'
         }));
         getContacts()
+        navigator.geolocation.getCurrentPosition((pos) => {
+            const crd = pos.coords;
+            setLat(crd.latitude)
+            setLng(crd.longitude)
+        }, error, options)
     }, []);
     
     const doPost = (contact) => (severity) => {
@@ -61,7 +72,7 @@ const App = () => {
             body: JSON.stringify({
                 severity: severity,
                 contact: contact,
-                user: user    
+                user: Object.assign(user, {geolocation: {lat: lat, lng: lng}})    
             })
         })
     }
