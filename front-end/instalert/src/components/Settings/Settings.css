@@ -20,6 +20,7 @@
     background-color: #fcfcfc;
     margin-left : 5%;
     margin-right: 5%;
+    padding-bottom: 5ex;
 }
 
 .Contacts {
@@ -45,4 +46,10 @@
     text-align: left;
     text-decoration: underline;
     margin: 2%;
+}
+
+.settings-add {
+    display: flex;
+    justify-content:center;
+    align-items:center;
 }

@@ -2,18 +2,10 @@ import React from "react";
 import "./UserSettings.css";
 import TextField from "@mui/material/TextField";
 import Fab from "@mui/material/Fab";
-import createTheme from '@mui/material/styles/createTheme';
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import indigo from "@mui/material/colors/indigo";
+// import createTheme from '@mui/material/styles/createTheme';
+// import ThemeProvider from "@mui/material/styles/ThemeProvider";
+// import indigo from "@mui/material/colors/indigo";
 import SaveIcon from '@mui/icons-material/Save';
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: indigo[200]
-        }
-    }
-});
 
 
 function UserSettings ({fn, ln}) {
@@ -27,9 +19,8 @@ function UserSettings ({fn, ln}) {
 
     return (
         <article className="UserSettings" ref={curRef}>
-            <div class="Userbox">
-            <div class="flex-container">
-            <ThemeProvider theme={theme}>
+            <div className="Userbox">
+            <div className="flex-container">
                 <div className="text-wrap">
                     <TextField
                         id="firstname"
@@ -63,7 +54,6 @@ function UserSettings ({fn, ln}) {
                 >
                     <SaveIcon/>
                 </Fab>
-            </ThemeProvider>
             </div>
             </div>
         </article>

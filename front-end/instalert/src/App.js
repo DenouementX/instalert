@@ -5,9 +5,8 @@ import Settings from "./components/Settings/Settings";
 import React, {useState, useEffect} from "react";
 
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"
+import { getFirestore, collection, doc, getDocs, deleteDoc, updateDoc, addDoc } from "firebase/firestore"
 
-import { collection, getDocs } from "firebase/firestore"; 
 
 const user = {
     firstName: "John",
@@ -38,11 +37,17 @@ const App = () => {
         const firestore = getFirestore()
         const querySnapshot = await getDocs(collection(firestore, "contacts"));
 
-        const contacts = querySnapshot.docs.map((doc) => doc.data())
-        contacts.forEach(contact => contact.doPost = doPost(contact))
+        const contacts = querySnapshot.docs.map((doc) => Object.assign(doc.data(), {key: doc.id}));
+        contacts.forEach(contact => {
+            contact.doPost   = doPost(contact);
+            contact.doDelete = doDelete(contact);
+            contact.doUpdate = doUpdate(contact);
+        });
         //console.log(contacts)
 
-        contactsUpdate(contacts)
+        contacts.doAdd = doAdd;
+
+        contactsUpdate(contacts);
         dbUpdate(firestore)
     }
 
@@ -87,6 +92,34 @@ const App = () => {
             })
         })
     }
+
+    const doDelete = (contact) => async () => {
+        await deleteDoc(doc(db, "contacts", contact.key));
+        await getContacts();
+    };
+
+    const doUpdate = (contact) => async (fn, ln, un, pn, pt) => {
+        await updateDoc(doc(db, "contacts", contact.key), {
+            firstName: fn,
+            lastName: ln,
+            username: un,
+            phoneNumber: pn,
+            postType: pt,
+        });
+        await getContacts();
+    };
+
+    const doAdd = async () => {
+        await addDoc(collection(db, "contacts"), {
+            firstName: "Enter first name",
+            lastName: "Enter last name",
+            username: "Enter username",
+            phoneNumber: "Enter phone number",
+            postType: "Animals",
+        });
+        await getContacts();
+    };
+
 
     return (
     <Router>

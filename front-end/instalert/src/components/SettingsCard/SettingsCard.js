@@ -6,24 +6,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Fab from "@mui/material/Fab";
-import createTheme from '@mui/material/styles/createTheme';
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import indigo from "@mui/material/colors/indigo";
+// import createTheme from '@mui/material/styles/createTheme';
+// import ThemeProvider from "@mui/material/styles/ThemeProvider";
+// import indigo from "@mui/material/colors/indigo";
 import SaveIcon      from "@mui/icons-material/Save";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: indigo[200]
-        }
-    }
-});
-
-function SettingsCard ({fn, ln, un, pn, pt}) {
+function SettingsCard ({fn, ln, un, pn, pt, dd, du}) {
     const [firstName, setFirstName] = React.useState(fn);
     const [lastName, setLastName] = React.useState(ln);
-    const [userName, setUserName] = React.useState(un);
+    const [username, setUserName] = React.useState(un);
     const [phoneNumber, setPhoneNumber] = React.useState(pn);
     const [postType, setPostType] = React.useState(pt);
 
@@ -37,12 +29,8 @@ function SettingsCard ({fn, ln, un, pn, pt}) {
 
     return (
         <article className="SettingsCard" ref={curRef}>
-            <div className="Delete">
-                
-            </div>
             <div className="CardFields">
             <div className="flex-container">
-            <ThemeProvider theme={theme}>
                 {/*<div className="empty-width"/>*/}
                 <div className="text-wrap">
                     <TextField
@@ -77,7 +65,7 @@ function SettingsCard ({fn, ln, un, pn, pt}) {
                     variant="filled"
                     required="true"
                     // InputProps = {{style:{fontSize:8}}}
-                    value={userName}
+                    value={username}
                     onChange={changeUserName}
                 />
                 </div>
@@ -120,6 +108,7 @@ function SettingsCard ({fn, ln, un, pn, pt}) {
                             color="primary"
                             ariaLabel="save"
                             sx={{ boxShadow: 4 }}
+                            onClick={() => du(firstName, lastName, username, phoneNumber, postType)}
                         >
                             <SaveIcon/>
                         </Fab>
@@ -129,12 +118,12 @@ function SettingsCard ({fn, ln, un, pn, pt}) {
                             color="primary"
                             ariaLabel="save"
                             sx={{ boxShadow: 4 }}
+                            onClick={dd}
                         >
                             <DeleteForever/>
                         </Fab>
                     </div>
                 </div>
-            </ThemeProvider>
             </div>
             </div>
         </article>
