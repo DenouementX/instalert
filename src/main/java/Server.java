@@ -163,7 +163,7 @@ public class Server {
             String username = map.get(phoneNumber);
             
             if (msgBody.toUpperCase().equals("OK")) {
-                broadcastMessage(username + " liked your post");
+                broadcastMessage(username);
             }
 
             return "";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Posts.css';
 import Post from '../Post/Post';
-
+import toast, { Toaster } from 'react-hot-toast';
 
 const initPosts = [
     {
@@ -121,6 +121,9 @@ const Posts = ({ contacts }) => {
 
         ws.current.onmessage = e => {
             const message = e.data;
+            if (message != 'ping') {
+                toast('Here is your toast.');
+            }
             console.log(message);
         };
     }, []);
