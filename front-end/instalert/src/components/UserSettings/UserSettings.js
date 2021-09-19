@@ -1,6 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import "./UserSettings.css";
 import TextField from "@mui/material/TextField";
+import Fab from "@mui/material/Fab";
+import createTheme from '@mui/material/styles/createTheme';
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import indigo from "@mui/material/colors/indigo";
+import SaveIcon from '@mui/icons-material/Save';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: indigo[200]
+        }
+    }
+});
+
 
 function UserSettings ({fn, ln}) {
     const [firstName, setFirstName] = React.useState(fn);
@@ -15,25 +29,41 @@ function UserSettings ({fn, ln}) {
         <article className="UserSettings" ref={curRef}>
             <div class="Userbox">
             <div class="flex-container">
-                <TextField
-                    id="firstname"
-                    className="FieldText"
-                    label="First Name"
-                    variant="filled"
-                    required="true"
-                    InputProps = {{style:{fontSize:8}}}
-                    value={firstName}
-                    onChange={changeFirstName}
-                />
-                <TextField
-                    id="lastname"
-                    className="FieldText"
-                    label="Last Name"
-                    variant="filled"
-                    InputProps = {{style:{fontSize:8}}}
-                    value={lastName}
-                    onChange={changeLastName}
-                />
+            <ThemeProvider theme={theme}>
+                <div className="text-wrap">
+                    <TextField
+                        id="firstname"
+                        className="FieldText"
+                        label="First Name"
+                        variant="filled"
+                        required="true"
+                        // InputProps = {{style:{fontSize:8}}}
+                        value={firstName}
+                        onChange={changeFirstName}
+                        sx={{ boxShadow: 2 }}
+                    />
+                </div>
+                <div className="text-wrap">
+                    <TextField
+                        id="lastname"
+                        className="FieldText"
+                        label="Last Name"
+                        variant="filled"
+                        // InputProps = {{style:{fontSize:8}}}
+                        value={lastName}
+                        onChange={changeLastName}
+                        sx={{ boxShadow: 2 }}
+                    />
+                </div>
+                <hr/>
+                <Fab
+                    color="primary"
+                    ariaLabel="save"
+                    sx={{ boxShadow: 4 }}
+                >
+                    <SaveIcon/>
+                </Fab>
+            </ThemeProvider>
             </div>
             </div>
         </article>

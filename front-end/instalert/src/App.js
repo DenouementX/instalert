@@ -85,7 +85,7 @@ const App = () => {
                 <Posts contacts={contacts}/>
             </Route>
             <Route path="/settings">
-                <Settings />
+                <Settings contacts={contacts}/>
             </Route>
         </div>
     </Router>

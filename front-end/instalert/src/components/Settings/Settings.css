@@ -17,7 +17,7 @@
 .Settings {
     border-radius: 3px;
     border: 1px solid #ddd;
-    background-color: #eee;
+    background-color: #fcfcfc;
     margin-left : 5%;
     margin-right: 5%;
 }
@@ -28,11 +28,11 @@
 }
 
 .FieldText {
-    width: 30%;
+    /*width: 30%;*/
 }
 
 .FieldSelect {
-    width: 30%;
+    /*width: 30%;*/
 }
 
 .CenterText {
